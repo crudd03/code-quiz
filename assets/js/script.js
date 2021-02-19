@@ -1,5 +1,7 @@
 let questionTextEl = document.querySelector(".questionText");
-let buttonTextEl = document.querySelector(".answerButtons");
+let buttonListEl = document.querySelector(".answerButtons");
+let questionNumber = 0;
+let ansButton;
 
 let instructions = "Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!"
 
@@ -56,35 +58,47 @@ let myQuestions = [
     }
 ]
 
-// Creation of instructions and Start button
+// Creation of instructions and Start button, set starting question
+
 questionTextEl.textContent = instructions;
 let startButtonEl = document.createElement("button");
-buttonTextEl.appendChild(startButtonEl);
+buttonListEl.appendChild(startButtonEl);
 startButtonEl.textContent = "Start";
 
+
+//Start Quiz
+
+startButtonEl.addEventListener("click", renderQuestion);
+
 // Start Quiz with first question
-function startQuiz() {
-    startButtonEl.addEventListener("click", function() {
-        questionTextEl.textContent = myQuestions[0].question;
-        buttonTextEl.removeChild(startButtonEl);
+function renderQuestion() {
+        
+        questionTextEl.textContent = myQuestions[questionNumber].question;
+        buttonListEl.removeChild(startButtonEl);
 
-        let buttonA = document.createElement("button");
-        let buttonB = document.createElement("button");
-        let buttonC = document.createElement("button");
-        let buttonD = document.createElement("button");
+        for (letter in myQuestions[questionNumber].answers) {
+            ansButton = document.createElement("button");
+            ansButton.setAttribute("data-letter", letter);
+            ansButton.textContent = (letter + ": " + myQuestions[questionNumber].answers[letter]);
+            buttonListEl.append(ansButton);
+        }
+        // Listen for answer
+        // checkAnswer();
+        // Display correct/incorrect and move on to next question
+        // Increment question number by 1
+    }
 
-        buttonTextEl.appendChild(buttonA);
-        buttonTextEl.appendChild(buttonB);
-        buttonTextEl.appendChild(buttonC);
-        buttonTextEl.appendChild(buttonD);
+// function checkAnswer() {
+    //change buttonlistEl to the event
+    buttonListEl.addEventListener("click", function (event) {
 
-        buttonA.textContent = "a. " + myQuestions[0].answers.a;
-        buttonB.textContent = "b. " + myQuestions[0].answers.b;
-        buttonC.textContent = "c. " + myQuestions[0].answers.c;
-        buttonD.textContent = "d. " + myQuestions[0].answers.d;
-    })    
-}
+        if ($(event.target).attr("data-letter") == myQuestions[questionNumber].correctAnswer) {
+            console.log("true");
+        } else {
+            console.log("false");
+        }
 
-startQuiz();
+    })
+// }
 
-// Have more functions, i.e. 'draw new question,' 'submit answer' and call draw new question into submit answer, etc.
+// Have more functions, i.e. 'draw new question,' 'submit answer' and call draw new question into submit answer, etc. Also don't forget timer and high score
