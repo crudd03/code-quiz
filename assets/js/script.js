@@ -1,7 +1,12 @@
 let questionTextEl = document.querySelector(".questionText");
 let buttonListEl = document.querySelector(".answerButtons");
+let startButtonEl = document.querySelector(".startButton")
+let startButton = document.createElement("button");
+let correctText = document.querySelector(".correctText");
+let timer = document.querySelector(".timer");
 let questionNumber = 0;
 let ansButton;
+let secondsLeft = 75;
 
 let instructions = "Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!"
 
@@ -59,46 +64,65 @@ let myQuestions = [
 ]
 
 // Creation of instructions and Start button, set starting question
+function renderInstructions() {
+    questionTextEl.textContent = instructions;
+    startButtonEl.appendChild(startButton);
+    startButton.textContent = "Start";
+}
 
-questionTextEl.textContent = instructions;
-let startButtonEl = document.createElement("button");
-buttonListEl.appendChild(startButtonEl);
-startButtonEl.textContent = "Start";
-
+renderInstructions();
 
 //Start Quiz
+startButton.addEventListener("click", renderFirstQuestion);
 
-startButtonEl.addEventListener("click", renderQuestion);
+function renderFirstQuestion() {
+    startButtonEl.removeChild(startButton);
+    renderQuestion();
+    setTime();
+}
 
-// Start Quiz with first question
+// Render question function
 function renderQuestion() {
         
         questionTextEl.textContent = myQuestions[questionNumber].question;
-        buttonListEl.removeChild(startButtonEl);
 
         for (letter in myQuestions[questionNumber].answers) {
             ansButton = document.createElement("button");
             ansButton.setAttribute("data-letter", letter);
             ansButton.textContent = (letter + ": " + myQuestions[questionNumber].answers[letter]);
-            buttonListEl.append(ansButton);
+            buttonListEl.appendChild(ansButton);
         }
-        // Listen for answer
-        // checkAnswer();
-        // Display correct/incorrect and move on to next question
-        // Increment question number by 1
     }
 
-// function checkAnswer() {
-    //change buttonlistEl to the event
+// Event listener for created buttons
+
     buttonListEl.addEventListener("click", function (event) {
+        let correctText = document.createElement("p");
 
         if ($(event.target).attr("data-letter") == myQuestions[questionNumber].correctAnswer) {
             console.log("true");
+            correctText.textContent = "Correct!";
         } else {
             console.log("false");
+            correctText.textContent = "Incorrect!";
+            secondsLeft = secondsLeft - 10;
+        }
+        // Removes buttons before generating next ones
+        for (letter in myQuestions[questionNumber].answers) {
+            // buttonListEl.removeChild(ansButton);
         }
 
-    })
-// }
+        questionNumber++;
+        renderQuestion();
 
-// Have more functions, i.e. 'draw new question,' 'submit answer' and call draw new question into submit answer, etc. Also don't forget timer and high score
+    })
+
+// Timer
+function setTime() {
+    // Sets interval in variable
+    var timerInterval = setInterval(function() {
+      secondsLeft--;
+      timer.textContent = "Timer: " + secondsLeft;
+  
+    }, 1000);
+  }
