@@ -13,6 +13,7 @@
 * When all questions have been answered, or when the timer reaches 0, the screen will display an end game message which includes your score.
 * Note: Saving high score functionality is currently not in place, but is in progress.
 
-**Screenshot:**
+**Screenshots:**
 
+[![code-quiz-2.png](https://i.postimg.cc/KzNfPBMz/code-quiz-2.png)](https://postimg.cc/r0D5cdgX)
 [![code-quiz.png](https://i.postimg.cc/bJscWy9q/code-quiz.png)](https://postimg.cc/r0XPtLHH)
