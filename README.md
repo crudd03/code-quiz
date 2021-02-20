@@ -11,6 +11,7 @@
 * When an answer is selected, the screen will display whether or not that was a correct answer, and will move on to the next question.
 * If you select an incorrect answer, the timer will decrement by 10 seconds, and you will move onto the next question.
 * When all questions have been answered, or when the timer reaches 0, the screen will display an end game message which includes your score.
+* Note: Saving high score functionality is currently not in place, but is in progress.
 
 **Screenshot:**
 
