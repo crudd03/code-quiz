@@ -1,3 +1,4 @@
+// Defining variables
 let questionTextEl = document.querySelector(".questionText");
 let buttonListEl = document.querySelector(".answerButtons");
 let startButtonEl = document.querySelector(".startButton")
@@ -10,6 +11,7 @@ let secondsLeft = 75;
 
 let instructions = "Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!"
 
+// Questions array
 let myQuestions = [
     {
         question: "Commonly used data types DO NOT include",
@@ -49,7 +51,7 @@ let myQuestions = [
             c: "quotes",
             d: "parentheses"
         },
-        correctAnswer: 'd'
+        correctAnswer: 'c'
     },
     {
         question: "A very useful tool used during development and debugging for printing content to the debugger is:",
@@ -84,6 +86,10 @@ function renderFirstQuestion() {
 // Render question function
 function renderQuestion() {
         
+        if (questionNumber > 4 || secondsLeft === 0) {
+            showHighScore();
+        }
+
         questionTextEl.textContent = myQuestions[questionNumber].question;
 
         for (letter in myQuestions[questionNumber].answers) {
@@ -94,22 +100,16 @@ function renderQuestion() {
         }
     }
 
-// Event listener for created buttons
-
+    // Event listener for created buttons
     buttonListEl.addEventListener("click", function (event) {
-        let correctText = document.createElement("p");
 
         if ($(event.target).attr("data-letter") == myQuestions[questionNumber].correctAnswer) {
-            console.log("true");
             correctText.textContent = "Correct!";
+            $(buttonListEl).empty();
         } else {
-            console.log("false");
-            correctText.textContent = "Incorrect!";
             secondsLeft = secondsLeft - 10;
-        }
-        // Removes buttons before generating next ones
-        for (letter in myQuestions[questionNumber].answers) {
-            // buttonListEl.removeChild(ansButton);
+            correctText.textContent = "Incorrect!";
+            $(buttonListEl).empty();
         }
 
         questionNumber++;
@@ -119,10 +119,18 @@ function renderQuestion() {
 
 // Timer
 function setTime() {
-    // Sets interval in variable
     var timerInterval = setInterval(function() {
-      secondsLeft--;
-      timer.textContent = "Timer: " + secondsLeft;
-  
+        timer.textContent = "Timer: " + secondsLeft;      
+        secondsLeft--;
+      if (questionNumber > 4 || secondsLeft === 0) {
+        clearInterval(timerInterval);
+    }
     }, 1000);
   }
+
+// Show high score screen
+function showHighScore() {
+    $(buttonListEl).empty();
+    correctText.textContent = "";
+    questionTextEl.textContent = "Your score is " + secondsLeft + ". Congratulations!";
+}
