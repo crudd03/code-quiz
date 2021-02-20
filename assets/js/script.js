@@ -86,9 +86,9 @@ function renderFirstQuestion() {
 // Render question function
 function renderQuestion() {
         
-        if (questionNumber > 4 || secondsLeft === 0) {
-            showHighScore();
-        }
+        // if (questionNumber > 4 || secondsLeft === 0) {
+        //     showHighScore();
+        // }
 
         questionTextEl.textContent = myQuestions[questionNumber].question;
 
@@ -120,10 +120,11 @@ function renderQuestion() {
 // Timer
 function setTime() {
     var timerInterval = setInterval(function() {
-        timer.textContent = "Timer: " + secondsLeft;      
         secondsLeft--;
+        timer.textContent = "Timer: " + secondsLeft; 
       if (questionNumber > 4 || secondsLeft === 0) {
         clearInterval(timerInterval);
+        showHighScore();
     }
     }, 1000);
   }

@@ -1,7 +1,7 @@
 .timer {
     float: right;
     position: relative;
-    bottom: 100px;
+    bottom: 50px;
 }
 
 .questionText {
@@ -24,6 +24,3 @@
     margin-right: 4%;
 }
 
-.highScoreInput {
-    text-align: center;
-}
